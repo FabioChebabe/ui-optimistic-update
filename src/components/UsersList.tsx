@@ -1,6 +1,6 @@
 import { useUpdateUser } from "@/hooks/useUpdateUser";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/Avatar";
-import { Skeleton } from "./ui/skeleton";
+import { Skeleton } from "./ui/Skeleton";
 import { Switch } from "./ui/Switch";
 import { useUsers } from "@/hooks/useUsers";
 

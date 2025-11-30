@@ -11,9 +11,27 @@ export function useCreateUser() {
         mutationKey: CREATE_USER_MUTATION_KEY,
         mutationFn: createUser,
         onMutate: (variables) => {
-            const tmpUserId = Math.random().toString();
-            queryClient.setQueryData<UsersQueryData[]>(USERS_QUERY_KEY, (old) =>
-                old?.concat({ ...variables, id: tmpUserId, status: "pending" }),
+            console.log("onMutate", variables);
+            const tmpUserId = variables?.tmpUserId ?? Math.random().toString();
+            queryClient.setQueryData<UsersQueryData[]>(
+                USERS_QUERY_KEY,
+                (old) => {
+                    const exists = old?.some((u) => u.id === tmpUserId);
+
+                    if (exists) {
+                        return old?.map((user) =>
+                            user.id === tmpUserId
+                                ? { ...user, status: "pending" }
+                                : user,
+                        );
+                    }
+
+                    return old?.concat({
+                        ...variables,
+                        id: tmpUserId,
+                        status: "pending",
+                    });
+                },
             );
             return { tmpUserId };
         },

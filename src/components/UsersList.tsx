@@ -7,10 +7,12 @@ import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { Button } from "./ui/Button";
 import { RotateCcw } from "lucide-react";
+import { useCreateUser } from "@/hooks/useCreateUser";
 
 export function UsersList() {
     const { users, isLoading } = useUsers();
     const { updateUser } = useUpdateUser();
+    const { createUser } = useCreateUser();
 
     const handleCheckedChange = async (id: string, blocked: boolean) => {
         try {
@@ -59,7 +61,17 @@ export function UsersList() {
                         </div>
                     </div>
                     {user.status === "error" ? (
-                        <Button variant="outline">
+                        <Button
+                            variant="outline"
+                            onClick={() =>
+                                createUser({
+                                    name: user.name,
+                                    username: user.username,
+                                    blocked: user.blocked,
+                                    tmpUserId: user.id,
+                                })
+                            }
+                        >
                             <RotateCcw />
                         </Button>
                     ) : (

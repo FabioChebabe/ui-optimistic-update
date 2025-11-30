@@ -6,7 +6,7 @@ type ICreateUserDTO = Omit<IUser, "id">;
 export async function createUser({ blocked, name, username }: ICreateUserDTO) {
     await sleep(500);
 
-    const response = await fetch("http://localhost:4000/users", {
+    const response = await fetch("http://localhost:4000a/users", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

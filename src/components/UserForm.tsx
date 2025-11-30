@@ -2,21 +2,19 @@ import { useCreateUser } from "@/hooks/useCreateUser";
 import { Button } from "./ui/Button";
 import { Input } from "./ui/Input";
 import { useState } from "react";
-import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 
 export function UserForm() {
     const [name, setName] = useState("");
     const [username, setUsername] = useState("");
-    const { isLoading, createUser } = useCreateUser();
+    const { createUser } = useCreateUser();
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         try {
-            await createUser({ name, username, blocked: false });
             setName("");
             setUsername("");
-            toast.success("Usuário criado com sucesso!");
+            await createUser({ name, username, blocked: false });
         } catch (error) {
             toast.error("Erro ao criar o usuário.");
             console.log(error);
@@ -37,8 +35,8 @@ export function UserForm() {
                     onChange={(event) => setUsername(event.target.value)}
                 />
             </div>
-            <Button className="mt-3 w-full" disabled={isLoading} type="submit">
-                {isLoading ? <Loader2 className="animate-spin" /> : "Cadastrar"}
+            <Button className="mt-3 w-full" type="submit">
+                Cadastrar
             </Button>
         </form>
     );

@@ -1,22 +1,10 @@
 {
-  "users": [
-    {
-      "id": "1",
-      "name": "Fabio Carnelli",
-      "username": "FabioChebabe",
-      "blocked": false
-    },
-    {
-      "id": "e469",
-      "blocked": false,
-      "name": "test",
-      "username": "test"
-    },
-    {
-      "id": "f058",
-      "blocked": false,
-      "name": "Bruno Frigeri",
-      "username": "brunofrigeri"
-    }
-  ]
+    "users": [
+        {
+            "id": "1",
+            "name": "Fabio Carnelli",
+            "username": "FabioChebabe",
+            "blocked": false
+        }
+    ]
 }

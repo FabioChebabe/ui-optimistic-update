@@ -3,13 +3,22 @@ import { Avatar, AvatarFallback, AvatarImage } from "./ui/Avatar";
 import { Skeleton } from "./ui/Skeleton";
 import { Switch } from "./ui/Switch";
 import { useUsers } from "@/hooks/useUsers";
+import { toast } from "sonner";
+import { cn } from "@/lib/utils";
+import { Button } from "./ui/Button";
+import { RotateCcw } from "lucide-react";
 
 export function UsersList() {
     const { users, isLoading } = useUsers();
     const { updateUser } = useUpdateUser();
 
     const handleCheckedChange = async (id: string, blocked: boolean) => {
-        await updateUser({ blocked, id });
+        try {
+            await updateUser({ blocked, id });
+        } catch (error) {
+            toast.error("Erro ao atualizar o usuário.");
+            console.log(error);
+        }
     };
 
     return (
@@ -24,7 +33,12 @@ export function UsersList() {
             {users.map((user) => (
                 <div
                     key={user.id}
-                    className="border p-4 rounded-md flex justify-between items-center"
+                    className={cn(
+                        "border p-4 rounded-md flex justify-between items-center",
+                        user.status === "pending" && "opacity-60",
+                        user.status === "error" &&
+                            "border-destructive bg-destructive/10",
+                    )}
                 >
                     <div className="flex items-center gap-4 ">
                         <Avatar className="w-12 h-12">
@@ -44,12 +58,19 @@ export function UsersList() {
                             </small>
                         </div>
                     </div>
-                    <Switch
-                        checked={user.blocked}
-                        onCheckedChange={(blocked) =>
-                            handleCheckedChange(user.id, blocked)
-                        }
-                    />
+                    {user.status === "error" ? (
+                        <Button variant="outline">
+                            <RotateCcw />
+                        </Button>
+                    ) : (
+                        <Switch
+                            checked={user.blocked}
+                            onCheckedChange={(blocked) =>
+                                handleCheckedChange(user.id, blocked)
+                            }
+                            disabled={user.status === "pending"}
+                        />
+                    )}
                 </div>
             ))}
         </div>

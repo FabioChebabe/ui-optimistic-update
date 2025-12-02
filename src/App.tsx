@@ -6,12 +6,14 @@ import { UserForm } from "./components/UserForm";
 import { UsersList } from "./components/UsersList";
 import { ThemeProvider } from "./context/ThemeContext";
 import { queryClient } from "./lib/queryClient";
-import { Toaster } from "./components/ui/sonner";
+import { Toaster } from "./components/ui/Sonner";
+import FormPage from "./page/FormPage";
 
 export function App() {
     return (
         <QueryClientProvider client={queryClient}>
-            <ThemeProvider>
+            <FormPage />
+            {/* <ThemeProvider>
                 <div className="max-w-xl mx-auto mt-20">
                     <Header />
                     <main className="mt-10 space-y-3">
@@ -20,7 +22,7 @@ export function App() {
                     </main>
                 </div>
                 <Toaster />
-            </ThemeProvider>
+            </ThemeProvider> */}
             <ReactQueryDevtools />
         </QueryClientProvider>
     );
